@@ -1,0 +1,76 @@
+trigger:
+    batch: true
+    branches:
+    #    include:
+    #    - main
+    #    - develop
+        exclude:
+        - '*'
+    paths:
+      include:
+      - docker/Dockerfile
+
+variables:
+  #Admin Service Principal Variable Group
+  - group: service_principal
+  - group: databricks_cli
+  - group: blob_insight
+  
+  - name: databricks_workspace_uri
+    value: https://eastus.azuredatabricks.net/ 
+  - name: runtime_environment
+    value: local
+  - name: api_type
+    value: clusters
+  - name: permission_level
+    value: CAN_RESTART
+  
+  #Databricks 
+  - name: databricks.register.job.name
+    value: Flood_ML_(Register)
+  - name: databricks.deploy.job.name
+    value: Flood_ML_(Deploy)
+  - name: databricks.directory
+    value: /Development/src
+  - name: databricks.register.notebook.path
+    value: deployment/register_run
+  - name: databricks.deploy.notebook.path
+    value: deployment/Deploy_ACI
+  - name: databricks.secret.scope
+    value: azureml
+  - name: cluster.name
+    value: Deploy_Love
+  - name: databricks.job.deploy
+    value: config.job.deploy.json
+  - name: databricks.num.workers
+    value: null
+  - name: databricks.node.type.id
+    value: Standard_F4s_v2
+  - name: databricks.min.workers
+    value: 1
+  - name: databricks.max.workers
+    value: 2
+  
+  #Azure ML
+  - name: resource.group
+    value: insight_sbx_rg
+  - name: workspace.name
+    value: Insight-Machine-Learning-sbx
+  - name: subscription.id
+    value: 87ea213f-502b-4fca-8120-34b9b9e22789
+  
+  
+  
+  
+resources:
+  repositories:
+    - repository: MLOps-Pipelines
+      type: git
+      name: Digital Engineer - Insight/MLOps-Pipelines
+  
+pool:
+    vmImage: "ubuntu-latest"
+  
+stages:
+- template: pipeline_jobs_config_deploy.yml@MLOps-Pipelines
+    

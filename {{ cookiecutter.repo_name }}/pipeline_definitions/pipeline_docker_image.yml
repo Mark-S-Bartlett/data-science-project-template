@@ -1,0 +1,39 @@
+#Pipeline for Databricks cluster creation
+trigger:
+    batch: true
+    branches:
+    #    include:
+    #    - main
+    #    - develop
+        exclude:
+        - '*'
+    paths:
+      include:
+      - docker/Dockerfile
+      - docker/requirements_pip.txt
+      - docker/requirements.txt
+
+variables:
+#Admin Service Principal Variable Group
+- group: service_principal
+
+- name: registry
+  value: insightmlregistrysbx
+- name: imageName
+  value: grass-gis-processing
+- name: tag
+  value: 2021-01-10
+- name: subscription
+  value: 87ea213f-502b-4fca-8120-34b9b9e22789
+
+resources:
+  repositories:
+    - repository: MLOps-Pipelines
+      type: git
+      name: Digital Engineer - Insight/MLOps-Pipelines
+
+pool:
+  vmImage: "ubuntu-latest"
+
+stages:
+- template: pipeline_docker.yml@MLOps-Pipelines

@@ -1,0 +1,65 @@
+#Pipeline for Batch Processing
+trigger:
+    batch: true
+    branches:
+        include:
+        - main
+        exclude:
+        - '*'
+        - develop
+    paths:
+      include:
+      - huc12_list.txt
+
+
+variables:
+#Admin Service Principal Variable Group
+- group: service_principal
+- group: blob_insight
+- group: acr_insight
+
+#Variables to be set for Azure resources
+- name: subscription
+  value: 87ea213f-502b-4fca-8120-34b9b9e22789
+- name: BLOB_ACCT
+  value: insightmlstoragesbx
+- name: BLOB_CONTAINER
+  value: flood-ml-code
+- name: BLOB_LOG_CONTAINER
+  value: flood-ml-logs
+- name: pool
+  value: Flood_Predictor
+- name: job
+  value: HUC_Processing
+- name: HUC_12_list
+  value: huc12_list.txt
+- name: ACR_USERNAME
+  value: insightmlregistrysbx
+- name: IMAGE_NAME
+  value: insightmlregistrysbx.azurecr.io/grass-gis-processing:update01-04-2021
+- name: BATCH_URL
+  value: https://insightmlbatchsbx.eastus.batch.azure.com
+- name: script_path
+  value: ./src/data/make_dataset.py
+- name: VM.size
+  value: STANDARD_D16_V3
+- name: target.dedicated.nodes
+  value: 8
+- name: target.low.priority.nodes
+  value: 0
+
+#Options
+- name: timeout
+  value: 300
+
+resources:
+  repositories:
+    - repository: MLOps-Pipelines
+      type: git
+      name: Digital Engineer - Insight/MLOps-Pipelines
+
+pool:
+  vmImage: "ubuntu-latest"
+
+stages:
+- template: pipeline_batch.yml@MLOps-Pipelines

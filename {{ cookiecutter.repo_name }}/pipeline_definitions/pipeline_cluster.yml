@@ -1,0 +1,36 @@
+#Pipeline for Databricks cluster creation
+trigger:
+    batch: true
+    branches:
+        include:
+        - '*'
+        exclude:
+        - main
+    paths:
+      include:
+      - cluster_and_libraries_config.json
+
+variables:
+#Admin Service Principal Variable Group
+- group: jkpclclddbksci00101
+
+- name: databricks_workspace_uri
+ value: https://centralus.azuredatabricks.net/
+- name: runtime_environment
+  value: local
+- name: api_type
+  value: clusters
+- name: permission_level
+  value: CAN_RESTART
+
+resources:
+  repositories:
+    - repository: DE-Insight-CICD_Pres
+      type: git
+      name: Digital%20Engineer%20-%20Insight/DE-Insight-CICD_Pres
+
+pool:
+    vmImage: "ubuntu-latest"
+
+stages:
+-template: pipeline_cluster_config.yml@DE-Insight-CICD_Pres

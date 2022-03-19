@@ -1,0 +1,106 @@
+name: flash-model-training
+#Pipeline for Databricks cluster creation
+trigger:
+    batch: true
+    branches:
+        include:
+        - '*'
+        exclude:
+        - main
+    paths:
+      include:
+      - cluster_and_libraries_config.json
+
+variables:
+#Admin Service Principal Variable Group
+- group: service_principal
+- group: databricks_cli
+- group: blob_insight
+
+- name: databricks_workspace_uri
+  value: https://eastus.azuredatabricks.net/ 
+- name: runtime_environment
+  value: local
+- name: api_type
+  value: clusters
+- name: permission_level
+  value: CAN_RESTART
+
+  # Databricks job name definition
+- name: databricks.validation.name
+  value: flash_validation
+- name: databricks.selection.name
+  value: flash_selection
+- name: databricks.training.name
+  value: flash_training
+
+# Set databricks directory to copy repository files into (in case someone tries to push code while running pipeline)
+- name: databricks.directory
+  value: /Development/src_flash
+
+# Specify notebooks for each job
+- name: databricks.validation.path
+  value: /data/data_validation
+- name: databricks.selection.path
+  value: /features/feature_selection
+- name: databricks.training.path
+  value: /models/flash_mllib
+
+# Set secret databricks scope name
+- name: databricks.secret.scope
+  value: azureml
+
+# Set project name
+- name: project.name
+  value: flash_flood_predictor
+
+# Set cluster names for each job 
+# 1 for both validation and selection and the other for training
+- name: cluster.validationSelection.name
+  value: flash_validation_selection
+- name: cluster.training.name
+  value: flash_training
+
+# Set path for job configuration file
+- name: databricks.job.config
+  value: config.flash.jobs.json
+
+# Set the node types and worker configurations for the clusters
+- name: databricks.num.workers
+  value: null
+- name: databricks.node.type.validationSelection
+  value: Standard_DS4_v2
+- name: databricks.min.workers.validationSelection
+  value: 2
+- name: databricks.max.workers.validationSelection
+  value: 8
+- name: databricks.node.type.training
+  value: Standard_DS14_v2
+- name: databricks.min.workers.training
+  value: 8
+- name: databricks.max.workers.training
+  value: 11
+
+
+# Azure ML
+- name: resource.group
+  value: insight_sbx_rg
+- name: workspace.name
+  value: Insight-Machine-Learning-sbx
+- name: subscription.id
+  value: 87ea213f-502b-4fca-8120-34b9b9e22789
+
+
+
+
+resources:
+  repositories:
+    - repository: MLOps-Pipelines
+      type: git
+      name: Digital Engineer - Insight/MLOps-Pipelines
+
+pool:
+    vmImage: "ubuntu-latest"
+
+stages:
+- template: pipeline_flash_jobs_train.yml@MLOps-Pipelines

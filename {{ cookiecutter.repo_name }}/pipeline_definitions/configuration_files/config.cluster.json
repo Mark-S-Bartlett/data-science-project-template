@@ -1,0 +1,29 @@
+{
+    "cluster_name": "CLUSTER_NAME",
+    "spark_version": "10.2.x-scala2.12",
+    "spark_conf": {
+        "spark.sql.execution.arrow.enabled": "true",
+        "spark.databricks.io.cache.enabled": "true"
+    },
+    "node_type_id": "NODE_TYPE_ID",
+    "num_workers": "NUM_WORKERS",
+    "autoscale": {
+        "min_workers": "MIN_WORKERS",
+        "max_workers": "MAX_WORKERS"
+    },
+    "ssh_public_keys": [],
+    "custom_tags": {
+        "Project": "PROJECT_NAME"
+    },
+    "cluster_log_conf": {
+        "dbfs": {
+            "destination": "dbfs:/cluster_logs"
+        }
+    },
+    "spark_env_vars": {
+        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+    },
+    "autotermination_minutes": 60,
+    "enable_elastic_disk": false,
+    "init_scripts": []
+}

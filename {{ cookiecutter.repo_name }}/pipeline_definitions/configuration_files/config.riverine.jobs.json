@@ -1,0 +1,15 @@
+{
+  "notebook_task": {
+    "notebook_path": "DIRECTORY/NOTEBOOK_PATH",
+    "base_parameters": {
+      "return_interval": "100",
+      "flood_type": "riverine"
+    }
+  },
+  "existing_cluster_id": "CLUSTER_ID",
+  "name": "JOB_NAME",
+  "max_concurrent_runs": 20,
+  "timeout_seconds": 86400,
+  "libraries": [],
+  "email_notifications": {}
+}

@@ -1,0 +1,16 @@
+{
+  "notebook_task": {
+    "notebook_path": "DIRECTORY/NOTEBOOK_PATH",
+    "base_parameters": {
+      "exp_prefix": "Flood_Predictor", 
+      "optimizing_metric": "F1 score", 
+      "storage_account_name": "insightmlstoragesbx"
+    }
+  },
+  "existing_cluster_id": "CLUSTER_ID",
+  "name": "JOB_NAME",
+  "max_concurrent_runs": 30,
+  "timeout_seconds": 86400,
+  "libraries": [],
+  "email_notifications": {}
+}

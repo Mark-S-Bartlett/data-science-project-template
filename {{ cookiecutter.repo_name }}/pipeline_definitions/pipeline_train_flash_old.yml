@@ -1,0 +1,72 @@
+name: flash-model-training
+#Pipeline for Databricks cluster creation
+trigger:
+    batch: true
+    branches:
+        include:
+        - '*'
+        exclude:
+        - main
+    paths:
+      include:
+      - cluster_and_libraries_config.json
+
+variables:
+#Admin Service Principal Variable Group
+- group: service_principal
+- group: databricks_cli
+- group: blob_insight
+
+- name: databricks_workspace_uri
+  value: https://eastus.azuredatabricks.net/ 
+- name: runtime_environment
+  value: local
+- name: api_type
+  value: clusters
+- name: permission_level
+  value: CAN_RESTART
+
+#Databricks Configuration
+- name: databricks.job.name
+  value: Flood_ML_(Train)
+- name: databricks.directory
+  value: /Development/src
+- name: databricks.notebook.path
+  value: /models/Insight-Flood-ML
+- name: databricks.secret.scope
+  value: azureml
+- name: cluster.name
+  value: Siri_on_Steroids
+- name: databricks.job.1
+  value: config.job.1.json
+- name: databricks.num.workers
+  value: null
+- name: databricks.node.type.id
+  value: Standard_DS14_v2
+- name: databricks.min.workers
+  value: 18
+- name: databricks.max.workers
+  value: 21
+
+#Azure ML
+- name: resource.group
+  value: insight_sbx_rg
+- name: workspace.name
+  value: Insight-Machine-Learning-sbx
+- name: subscription.id
+  value: 87ea213f-502b-4fca-8120-34b9b9e22789
+
+
+
+
+resources:
+  repositories:
+    - repository: MLOps-Pipelines
+      type: git
+      name: Digital Engineer - Insight/MLOps-Pipelines
+
+pool:
+    vmImage: "ubuntu-latest"
+
+stages:
+- template: pipeline_jobs_train.yml@MLOps-Pipelines

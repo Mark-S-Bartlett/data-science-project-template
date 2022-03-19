@@ -1,0 +1,4 @@
+sidecar=0.5.1
+jupyterlab_code_formatter
+git
+jupyterlab-git
