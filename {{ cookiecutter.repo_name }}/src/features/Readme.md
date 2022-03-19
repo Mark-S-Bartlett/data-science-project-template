@@ -1,10 +1,5 @@
 # Feature Selection 
-These two notebooks execute scripts in the src folder for feature selections based on different options. Users will select only one notebook as needed. Both scripts achieve feature selection thorugh a regularization method (elastic-net).
-
-* feature_selection_final: Select features from the original features. Should be considered as the primary choice. 
-
-
-* feature_selection_ployExpan: Select features from the ploynomially expanded features (degree =3). Should be used only when "feature_selection_final" cannot provide satisfatory ML F1 score. i.e. this scripts serves as a backup of the above script.
+Execute scripts in the src folder for feature selection thorugh a regularization method (elastic-net).
 
 
 ## Benefits of Feature Selection
