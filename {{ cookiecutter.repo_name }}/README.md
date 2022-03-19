@@ -1,22 +1,19 @@
 # Flood Predictor
 
-## Primary developers 
-- Mark Bartlett (Mark.BartlettJr@stantec.com) 
-- Assaad Mrad (Assaad.Mrad@stantec.com)
-- Jinshu Li (Jinshi.Li@Stantec.com)
-- Jared Van Blitterswyk (Jared.VanBlitterswyk@Stantec.com)
+## Primary data scientists/ml engineers 
+- Mark Bartlett (Mark.Bartlett@gmail.com) 
 
 ## Project objective
-Machine Learning for Flood Prediction
+Machine Learning for...
 
 ## Project scope
 
 ### Business/Engineering problems solved
 
-- Faster inference for flood predictions recreating FEMA maps
-- Go beyond FEMA maps with satellite imagery to train and test
-- Achieve high performance benchmark to FEMA maps and independent observations
-- Reduce cost
+- Faster..
+- Go beyond...
+- Achieve high performance benchmark ...
+- Reduce cost...
 
 ### Metrics for success
 
@@ -25,8 +22,8 @@ Machine Learning for Flood Prediction
     - Inference time
 
 - Data metrics:
-    - Ability to benchmark against satellite observations
-    - Train with observations, not just FEMA Maps
+    - Ability to benchmark against...
+    - Train with observations...
 
 - Reproducibility:
     - Ability to recreate data, ML, and deployment stages using pipeline
@@ -37,34 +34,29 @@ Machine Learning for Flood Prediction
 
 ### Resources
 
-- Microsoft Azure:
+- Microsoft Azure...AWS...Google Cloud...etc.:
     - ML Workspace
         - Track experiments and register models according to the metrics in the `src/models` directory
         - Serve real-time endpoints
     - DevOps
-        - Model training repository: DE-Insight-Flood-ML
+        - Model training repository...
         - Pipelines repository
-    - Databricks
+    - Computer Target (Databricks, etc.)
         - Jobs: run training and deployment jobs automatically
         - Feature store (to be used)
-    - Blob Storage
+    - Storage
         - Critical piece to speed up inference as pre-processed data can be saved
-    - Kubernetes (To be implemented)
+    - Kubernetes..
 
 ### Data
 
-- FEMA maps
-- Satellite Imagery
-    - Planet
-    - SWOT
+- Source 1...
+- Satellite...
+
 
 ## IT
 
-IT has imposed policies in our Azure resource group which means firewalls and VNets are now in effect. We have found workarounds to work within these constraints:
-- We are unable to install Libraries in Databricks clusters using the UI. We can create custom images with required packages pre-installed following https://docs.databricks.com/clusters/custom-containers.html
-    - After the image is created, it is uploaded to ACR to which our Databricks worskpace can connect to.
-- We are unable to download packages on VMs in the Development subscription. We can create custom Linux images on our machines and then spin up Linux VMs based on those images.
-- In the `Development` Azure subscription, Databricks secret scopes are Key-Vault backed (https://docs.microsoft.com/en-us/azure/databricks/security/secrets/secret-scopes). When create the Databricks secret using the UI, use the `Creator` Manage Principal.
+IT has imposed policies....
 
 ## Project organization
 
